@@ -1,4 +1,4 @@
-# TetrisCarGame.MinesweeperEngine
+# Comrade Network
 <br />My first project with GUI. I wrote it just for skills. Not recomend to use anywhere.
 <br />Executable files here too.
 <br />
