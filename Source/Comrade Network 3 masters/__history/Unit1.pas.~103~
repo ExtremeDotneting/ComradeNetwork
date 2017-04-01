@@ -1,0 +1,492 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, IdCoder, IdCoder3to4,
+  IdCoder00E, IdCoderXXE, IdBaseComponent, registry, Vcl.Imaging.pngimage,
+  Vcl.ExtCtrls;
+
+type
+  TForm1 = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Button1: TButton;
+    Button2: TButton;
+    IdEncoderXXE1: TIdEncoderXXE;
+    IdDecoderXXE1: TIdDecoderXXE;
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    Label3: TLabel;
+    Edit3: TEdit;
+    Label4: TLabel;
+    Edit4: TEdit;
+    Label5: TLabel;
+    Button3: TButton;
+    Label6: TLabel;
+    GroupBox3: TGroupBox;
+    Edit5: TEdit;
+    Edit6: TEdit;
+    Label7: TLabel;
+    Label8: TLabel;
+    Button4: TButton;
+    GroupBox4: TGroupBox;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label9: TLabel;
+    Edit7: TEdit;
+    Edit8: TEdit;
+    Edit9: TEdit;
+    Label13: TLabel;
+    Button5: TButton;
+    Edit11: TEdit;
+    Label14: TLabel;
+    Edit10: TEdit;
+    Label10: TLabel;
+    Edit12: TEdit;
+    Label15: TLabel;
+    Image1: TImage;
+    procedure Button1Click(Sender: TObject);
+    procedure Edit1KeyPress(Sender: TObject; var Key: Char);
+    procedure Edit2KeyPress(Sender: TObject; var Key: Char);
+    procedure Button2Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  superuser : System.Text;
+  licence : System.Text;
+  database : System.Text;
+  licenced : Boolean;
+  HDD_id : String;
+  MainFolder : String;
+
+implementation
+
+{$R *.dfm}
+
+uses Unit6;
+
+procedure OptionsSet1();
+var
+sql_options : String;
+op_n8, op_n2, op_n3, op_n4, op_n32, op_n31, op_n7, op_autorun, op_sound : Boolean;
+regist : TRegistry;
+begin
+  sql_options:='SELECT * FROM `launch`';
+  Form6.ZQueryNew_options.SQL.Clear;
+  Form6.ZQueryNew_options.SQL.Add(sql_options);
+  Form6.ZQueryNew_options.Active:=True;
+
+  if Form6.ZQueryNew_options.FieldByName('n8').AsInteger=1 then op_n8:=True
+  else op_n8:=False;
+
+  if Form6.ZQueryNew_options.FieldByName('n2').AsInteger=1 then op_n2:=True
+  else op_n2:=False;
+
+  if Form6.ZQueryNew_options.FieldByName('n3').AsInteger=1 then op_n3:=True
+  else op_n3:=False;
+
+  if Form6.ZQueryNew_options.FieldByName('n4').AsInteger=1 then op_n4:=True
+  else op_n4:=False;
+
+  if Form6.ZQueryNew_options.FieldByName('n32').AsInteger=1 then op_n32:=True
+  else op_n32:=False;
+
+  if Form6.ZQueryNew_options.FieldByName('n31').AsInteger=1 then op_n31:=True
+  else op_n31:=False;
+
+  if Form6.ZQueryNew_options.FieldByName('n7').AsInteger=1 then op_n7:=True
+  else op_n7:=False;
+
+  if Form6.ZQueryNew_options.FieldByName('autorun').AsInteger=1 then op_autorun:=True
+  else op_autorun:=False;
+
+  if Form6.ZQueryNew_options.FieldByName('sound').AsInteger=1 then op_sound:=True
+  else op_sound:=False;
+
+  Form6.ZQueryNew_options.Active:=False;
+
+  if admin7=0 then
+    begin
+      Form6.N2.Visible:=op_n2;
+      Form6.N3.Visible:=op_n3;
+      Form6.N4.Visible:=op_n4;
+      Form6.N31.Visible:=op_n31;
+      Form6.N32.Visible:=op_n32;
+      Form6.N7.Visible:=op_n7;
+      Form6.N8.Visible:=op_n8;
+
+      Form6.N19.Visible:=False;
+
+      if op_autorun=False then
+        begin
+          regist:=TRegistry.Create();
+          regist.RootKey:=HKEY_CURRENT_USER;
+
+          if regist.OpenKey('Software\Microsoft\Windows\CurrentVersion\Run', True) then
+            begin
+              regist.WriteString( Application.Title, Application.ExeName);
+              regist.CloseKey();
+              Form6.CheckBox3.Checked:=True;
+              Form6.CheckBox3.Enabled:=False;
+            end
+        end;
+
+      if op_sound=False then
+        begin
+          Form6.CheckBox1.Checked:=True;
+          Form6.CheckBox1.Enabled:=False;
+        end;
+    end
+  else
+    begin
+      Form6.N2.Visible:=True;
+      Form6.N3.Visible:=True;
+      Form6.N4.Visible:=True;
+      Form6.N31.Visible:=True;
+      Form6.N32.Visible:=True;
+      Form6.N7.Visible:=True;
+      Form6.N8.Visible:=True;
+      Form6.N19.Visible:=True;
+      Form6.CheckBox1.Enabled:=True;
+      Form6.CheckBox3.Enabled:=True;
+
+      Form6.CheckBox4.Checked:=op_n8;
+      Form6.CheckBox5.Checked:=op_n2;
+      Form6.CheckBox6.Checked:=op_n3;
+      Form6.CheckBox7.Checked:=op_n4;
+      Form6.CheckBox8.Checked:=op_n32;
+      Form6.CheckBox9.Checked:=op_n31;
+      Form6.CheckBox10.Checked:=op_n7;
+      Form6.CheckBox11.Checked:=op_autorun;
+      Form6.CheckBox12.Checked:=op_sound;
+    end;
+
+end;
+
+procedure Autorun();
+var
+reg : TRegistry;
+begin
+  reg := TRegistry.Create();
+  reg.RootKey := HKEY_CURRENT_USER;
+  if reg.OpenKey('Software\Microsoft\Windows\CurrentVersion\Run' {для одноразового автозапуска вместо Run ставим RunOnce}, False) then
+    begin
+      if reg.ValueExists(Application.Title) then
+        begin
+          Form6.CheckBox3.Checked:=True;
+          // программа есть в автозапуске
+        end;
+      reg.CloseKey();
+    end;
+end;
+
+procedure LicenceSet();
+var
+set_licence_email, set_licence_key : string;
+prog_licence_key, prog_licence_email, dec_licence_key : String;
+begin
+  set_licence_email:=Form1.Edit3.Text;
+  set_licence_key:=Form1.Edit4.Text;
+
+  dec_licence_key:=Form1.IdDecoderXXE1.DecodeString(Form1.IdDecoderXXE1.DecodeString(set_licence_key));
+  prog_licence_key:=HDD_id+'+'+set_licence_email;
+
+  if (dec_licence_key=prog_licence_key) then
+    begin
+      ShowMessage('Подтвержедно! Перезапустите программу.');
+      AssignFile(licence,MainFolder+'data\launch\licence.txt');
+      Rewrite(licence);
+      WriteLn(licence, set_licence_key);
+      WriteLn(licence, set_licence_email);
+      CloseFile(licence);
+    end
+  else
+    begin
+      ShowMessage('Неправильный ключ активации!');
+    end;
+
+end;
+
+procedure DatabaseInfoSet();
+var
+enc_Connection_Database, enc_Connection_HostName, enc_Connection_User, enc_Connection_Password, enc_Connection_Port : String;
+dec_Connection_Database, dec_Connection_HostName, dec_Connection_User, dec_Connection_Password, dec_Connection_Port : String;
+begin
+  dec_Connection_Database:=Form1.Edit9.Text;
+  dec_Connection_HostName:=Form1.Edit10.Text;
+  dec_Connection_User:=Form1.Edit8.Text;
+  dec_Connection_Password:=Form1.Edit7.Text;
+  dec_Connection_Port:=Form1.Edit12.Text;
+
+  enc_Connection_Database:=Form1.IdEncoderXXE1.Encode(Form1.IdEncoderXXE1.Encode(dec_Connection_Database));
+  enc_Connection_HostName:=Form1.IdEncoderXXE1.Encode(Form1.IdEncoderXXE1.Encode(dec_Connection_HostName));
+  enc_Connection_User:=Form1.IdEncoderXXE1.Encode(Form1.IdEncoderXXE1.Encode(dec_Connection_User));
+  enc_Connection_Password:=Form1.IdEncoderXXE1.Encode(Form1.IdEncoderXXE1.Encode(dec_Connection_Password));
+  enc_Connection_Port:=Form1.IdEncoderXXE1.Encode(Form1.IdEncoderXXE1.Encode(dec_Connection_Port));
+
+  AssignFile(database,MainFolder+'data\launch\database.txt');
+  Rewrite(database);
+  WriteLn(database, enc_Connection_Database);
+  WriteLn(database, enc_Connection_HostName);
+  WriteLn(database, enc_Connection_User);
+  WriteLn(database, enc_Connection_Password);
+  WriteLn(database, enc_Connection_Port);
+  CloseFile(database);
+end;
+
+procedure DatabaseInfo();  //Получение информации о базе данных.
+var
+enc_Connection_Database, enc_Connection_HostName, enc_Connection_User, enc_Connection_Password, enc_Connection_Port : String;
+begin
+  AssignFile(database,MainFolder+'data\launch\database.txt');
+  Reset(database);
+  ReadLn(database, enc_Connection_Database);
+  ReadLn(database, enc_Connection_HostName);
+  ReadLn(database, enc_Connection_User);
+  ReadLn(database, enc_Connection_Password);
+  ReadLn(database, enc_Connection_Port);
+  CloseFile(database);
+
+  Connection_Database:=Form1.IdDecoderXXE1.DecodeString(Form1.IdDecoderXXE1.DecodeString(enc_Connection_Database));
+  Connection_HostName:=Form1.IdDecoderXXE1.DecodeString(Form1.IdDecoderXXE1.DecodeString(enc_Connection_HostName));
+  Connection_User:=Form1.IdDecoderXXE1.DecodeString(Form1.IdDecoderXXE1.DecodeString(enc_Connection_User));
+  Connection_Password:=Form1.IdDecoderXXE1.DecodeString(Form1.IdDecoderXXE1.DecodeString(enc_Connection_Password));
+  Connection_Port:=Form1.IdDecoderXXE1.DecodeString(Form1.IdDecoderXXE1.DecodeString(enc_Connection_Port));
+
+end;
+
+procedure LicenceVer();
+var
+(*Получение ид жесткого диска*)
+VolName,
+FileSysName :array [0..MAX_PATH-1] of Char;
+FileSysFlags,
+VolSerialNum,
+MaxCompLength :DWord;
+(*Получение ид жесткого диска*)
+licence_email, dec_licence_key, enc_licence_key, prog_licence_key : String;
+begin
+  (*Получение ид жесткого диска*)
+  GetVolumeInformation('C:\', VolName, Max_Path, //Узнаем  id HDD.
+  @VolSerialNum,
+  MaxCompLength,
+  FileSysFlags,
+  FileSysName,
+  Max_Path);
+  HDD_id:=IntToHex(VolSerialNum, 8);  //Ид жесткого диска
+  Form1.Edit11.Text:=HDD_id;
+  (*Получение ид жесткого диска*)
+
+  AssignFile(licence,MainFolder+'data\launch\licence.txt');
+  Reset(licence);
+  ReadLn(licence, enc_licence_key);
+  ReadLn(licence, licence_email);
+  CloseFile(licence);
+
+  Form1.Edit3.Text:=licence_email;
+
+  dec_licence_key:=Form1.IdDecoderXXE1.DecodeString(Form1.IdDecoderXXE1.DecodeString(enc_licence_key));
+  prog_licence_key:=HDD_id+'+'+licence_email;
+
+  if prog_licence_key=dec_licence_key then
+    licenced:=True
+  else
+    licenced:=False;
+
+end;
+
+procedure SendToMainForm(); //Процедура входа.
+var
+sql_Zconnection_login : String;
+dec_login, dec_password, enc_login, enc_password : string;
+begin
+MainFolder:=ExtractFilePath(Application.ExeName);
+(*SysUtils	ExtractFileDir	Иизвлекает из полного имени файла название папки
+SysUtils	ExtractFileDrive	Извлекает из полного имени файла название диска
+SysUtils	ExtractFileExt	Извлекает из полного имени файла его расширение
+SysUtils	ExtractFileName	Извлекает из полного имени файла краткое имя файла
+SysUtils	ExtractFilePath	Извлекает из полного имени файла название патча
+SysUtils	FileAge	Получение датя/время последнего изменения файла, не открывая его
+SysUtils	FileDateToDateTime	Конвертирует формат даты/времени файла в значение TDateTime
+SysUtils	FileExists	Возвращает True если указанный файл существует
+SysUtils	FileGetAttr	Выдаёт атрибуты файла*)
+Form6.ZConnection1.LibraryLocation:=MainFolder+'lib\libmariadb.dll';
+
+Autorun();
+AssignFile(superuser,MainFolder+'data\launch\superuser.txt');
+Reset(superuser);
+ReadLn(superuser, enc_login);
+ReadLn(superuser, enc_password);
+dec_login:=Form1.IdDecoderXXE1.DecodeString(Form1.IdDecoderXXE1.DecodeString(enc_login));
+dec_password:=Form1.IdDecoderXXE1.DecodeString(Form1.IdDecoderXXE1.DecodeString(enc_password));
+CloseFile(superuser);
+(*decoded.Text:=Form1.IdDecoderXXE1.DecodeString(encoded);
+decoded.Add(Form1.IdDecoderXXE1.DecodeString(encoded));
+slogin:=decoded.Strings[0];
+spassword:=decoded.Strings[1];*)
+login:=Form1.Edit1.Text;
+password:=Form1.Edit2.Text;
+
+DatabaseInfo();
+  Form6.ZConnection1.Database:=Connection_Database;
+  Form6.ZConnection1.HostName:=Connection_HostName;
+  Form6.ZConnection1.Port:=StrToInt(Connection_Port);
+  Form6.ZConnection1.User:=Connection_User;
+  Form6.ZConnection1.Password:=Connection_Password;
+
+  try
+    Form6.ZConnection1.Connected:=True;
+  except
+    ShowMessage('Невозможном подключится к серверу!'#13#10'Проверьте подключения к сети. Возможно нужно обновить программу.')
+  end;
+
+if (login=dec_login) and (password=dec_password) then
+ begin
+    Form1.GroupBox1.Visible:=True;
+    Form1.GroupBox2.Visible:=True;
+    Form1.Edit9.Text:=Connection_Database;
+    Form1.Edit10.Text:=Connection_HostName;
+    Form1.Edit12.Text:=Connection_Port;
+    Form1.Edit8.Text:=Connection_User;
+    Form1.Edit7.Text:=Connection_Password;
+
+    Form1.Height:=625;
+    LicenceVer();
+    if licenced then
+      begin
+        Form1.Label6.Visible:=True;
+        Form1.Label3.Visible:=False;
+        Form1.Label4.Visible:=False;
+        Form1.Label14.Visible:=False;
+        Form1.Button3.Visible:=False;
+        Form1.Edit3.Visible:=False;
+        Form1.Edit4.Visible:=False;
+        Form1.Edit11.Visible:=False;
+
+        Form1.Button4.Enabled:=True;
+        Form1.Button5.Enabled:=True;
+
+        Form6.Visible:=True;
+        admin7:=1;
+        Form6.N23.Click;
+      end
+    else
+      begin
+        ShowMessage('Лицензия отсутствует!');
+        Form1.Button4.Enabled:=False;
+        Form1.Button5.Enabled:=True;
+        Form1.Edit10.ReadOnly:=True;
+
+        Form6.Visible:=True;
+        admin7:=1;
+        Form6.N23.Click;
+      end;
+
+
+ end
+else
+ begin
+  if Form6.ZConnection1.Connected then
+    begin
+      sql_Zconnection_login:='SELECT * FROM `workers` WHERE login="'+login+'" And password="'+password+'"';
+      Form6.ZQuery_login.SQL.Clear;
+      Form6.ZQuery_login.SQL.Add(sql_Zconnection_login);
+      try
+        Form6.ZQuery_login.Active := True;
+      except
+        ShowMessage('Ошибка! В базе не найдена нужная таблица.');
+      end;
+      if (Form6.ZQuery_login.RecordCount.ToDouble=1) and (Form6.ZQuery_login.Active) then
+        begin
+          worker_id:=Form6.ZQuery_login.FieldByName('worker_id').AsInteger;
+          admin7:=Form6.ZQuery_login.FieldByName('admin7').AsInteger;
+          name_user:=Form6.ZQuery_login.FieldByName('name').AsString;
+          surname:=Form6.ZQuery_login.FieldByName('surname').AsString;
+          vk_page:=Form6.ZQuery_login.FieldByName('vk_page').AsString;
+          skype:=Form6.ZQuery_login.FieldByName('skype').AsString;
+          dolgnost:=Form6.ZQuery_login.FieldByName('dolgnost').AsString;
+          rating:=Form6.ZQuery_login.FieldByName('rating').AsInteger;
+          rating_full:=Form6.ZQuery_login.FieldByName('rating_full').AsInteger;
+          last_visit:=Form6.ZQuery_login.FieldByName('last_visit').AsString;
+
+          OptionsSet1();
+
+          Form6.Visible:=True;
+          Form1.Visible:=False;
+
+          Form6.N17.Click;
+
+
+          Form6.MediaPlayer1.Close;
+          Form6.MediaPlayer1.Open;
+        end
+      else
+        begin
+          ShowMessage('Неправильный логин или пароль!');
+        end;
+    end;
+ end;
+
+end;
+
+procedure TForm1.Button1Click(Sender: TObject); //Нажатие кнопки "Войти".
+begin
+
+  SendToMainForm();
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  Application.Terminate;
+  Form6.Close;
+  Form1.Close;
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+  LicenceSet();
+end;
+
+procedure TForm1.Button4Click(Sender: TObject);
+var new_dec_login, new_dec_password, new_enc_login, new_enc_password : string;
+begin
+  new_dec_login:=Edit5.Text;
+  new_dec_password:=Edit6.Text;
+  new_enc_login:=IdEncoderXXE1.Encode(IdEncoderXXE1.Encode(new_dec_login));
+  new_enc_password:=IdEncoderXXE1.Encode(IdEncoderXXE1.Encode(new_dec_password));
+  AssignFile(superuser,MainFolder+'data\launch\superuser.txt');
+  Rewrite(superuser);
+  WriteLn(superuser, new_enc_login);
+  WriteLn(superuser, new_enc_password);
+  CloseFile(superuser);
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+begin
+  DatabaseInfoSet();
+  ShowMessage('Перезапустите программу!')
+end;
+
+procedure TForm1.Edit1KeyPress(Sender: TObject; var Key: Char);
+begin
+  if key=#13 then SendToMainForm();
+end;
+
+procedure TForm1.Edit2KeyPress(Sender: TObject; var Key: Char);
+begin
+  if key=#13 then SendToMainForm();
+end;
+
+end.

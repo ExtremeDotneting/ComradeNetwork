@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.777,C:\Users\asus\Desktop\Comrad Net\Project3.dproj=C:\Users\asus\Documents\Embarcadero\Studio\Projects\Project3.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.591,C:\Users\asus\Desktop\Comrad Net\Unit6.dfm=C:\Users\asus\Documents\Embarcadero\Studio\Projects\Unit6.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.591,C:\Users\asus\Desktop\Comrad Net\Unit6.pas=C:\Users\asus\Documents\Embarcadero\Studio\Projects\Unit6.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.304,=C:\Users\asus\Documents\Embarcadero\Studio\Projects\Unit6.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.299,=C:\Users\asus\Desktop\Comrad Net\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>
