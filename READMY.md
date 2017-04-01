@@ -2,8 +2,12 @@
 <br />My first project with GUI. I wrote it just for skills. Not recomend to use anywhere.
 <br />Executable files here too.
 <br />
-<br />Work demo:
-![alt tag](demo.gif)
+<br />Work screenshots:
+![alt tag](screenshot1.PNG)
+<br />
+![alt tag](screenshot2.PNG)
+<br />
+![alt tag](screenshot3.PNG)
 <br />
 <br />
 <br />Contacts:
